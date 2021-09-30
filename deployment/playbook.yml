@@ -1,0 +1,31 @@
+---
+- hosts: sites
+  remote_user: ec2-user
+  tasks:
+    - name: Install python3
+      apt:
+        name: python3
+    - name: Install pip3
+      apt:
+        name: python3-pip
+    - name: Install docker python
+      pip:
+        name: docker
+    - name: Pull image
+      docker_image:
+        name: oisina/alfred:latest
+        source: pull
+        force: yes
+    - name: Remove old
+      docker_container:
+        name: alfred
+        state: absent
+    - name: Create container
+      docker_container:
+        name: alfred
+        image: oisina/alfred
+        state: started
+        network_mode: host
+        env:
+          ALFRED_TOKEN: "{{ alfred_token }}"
+          ALFRED_APPTOKEN: "{{ alfred_apptoken }}"

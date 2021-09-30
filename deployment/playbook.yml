@@ -7,7 +7,7 @@
         name: python37
     - name: Install pip3
       yum:
-        name: python37-pip
+        name: python3-pip
     - name: Install docker python
       pip:
         name: docker

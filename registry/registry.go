@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
@@ -62,6 +63,29 @@ func NewRegistry() Registry {
 	return Registry{Services: make([]Service, 0)}
 }
 
+func FromFile(file string) (Registry, error) {
+	f, err := ioutil.ReadFile(file)
+	if err != nil {
+		return Registry{}, err
+	}
+
+	var reg Registry
+	err = json.Unmarshal(f, &reg)
+	if err != nil {
+		return Registry{}, err
+	}
+
+	return reg, nil
+}
+
+func (r *Registry) ToFile(file string) error {
+	marshal, err := json.Marshal(*r)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(file, marshal, 0777)
+}
+
 func (r *Registry) PrintRegistry() {
 	log.Info("Services:")
 	for _, service := range r.Services {
@@ -84,6 +108,11 @@ func (r *Registry) interceptRegister(message SendCommand) string {
 
 	r.Services = append(r.Services, service)
 
+	err := r.ToFile("services.json")
+	if err != nil {
+		log.WithError(err).Error("Could not write services to file.")
+	}
+
 	return "Service registered."
 }
 
@@ -105,6 +134,11 @@ func (r *Registry) interceptDeregister(message SendCommand) string {
 
 	r.Services[i] = r.Services[len(r.Services)-1]
 	r.Services = r.Services[:len(r.Services)-1]
+
+	err := r.ToFile("services.json")
+	if err != nil {
+		log.WithError(err).Error("Could not write services to file.")
+	}
 
 	log.WithFields(log.Fields{
 		"command": command,

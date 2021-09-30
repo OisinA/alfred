@@ -5,6 +5,7 @@ import (
 	"alfred/config"
 	"alfred/registry"
 	"context"
+	"os"
 
 	"github.com/Strum355/log"
 	"github.com/slack-go/slack"
@@ -32,6 +33,13 @@ func main() {
 	// 	Port:           "3000",
 	// 	Alive:          true,
 	// })
+
+	if _, err := os.Stat("services.json"); !os.IsNotExist(err) {
+		serviceReg, err = registry.FromFile("services.json")
+		if err != nil {
+			panic(err)
+		}
+	}
 
 	serviceReg.PrintRegistry()
 

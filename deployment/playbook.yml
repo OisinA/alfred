@@ -3,11 +3,11 @@
   remote_user: ec2-user
   tasks:
     - name: Install python3
-      apt:
-        name: python3
+      yum:
+        name: python34
     - name: Install pip3
-      apt:
-        name: python3-pip
+      yum:
+        name: python34-pip
     - name: Install docker python
       pip:
         name: docker

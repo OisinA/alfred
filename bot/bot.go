@@ -89,6 +89,7 @@ func (b *Bot) HandleEvent(ctx context.Context, event slackevents.EventsAPIEvent)
 			msg, err := b.registry.SendByCommand(command, registry.SendCommand{
 				Command: command,
 				User:    user.Name,
+				UserID:  user.ID,
 				Args:    withoutCommand,
 			})
 
@@ -132,6 +133,7 @@ func (b *Bot) HandleEvent(ctx context.Context, event slackevents.EventsAPIEvent)
 			msg, err := b.registry.SendByCommand(command, registry.SendCommand{
 				Command: command,
 				User:    user.Name,
+				UserID:  user.ID,
 				Args:    withoutCommand,
 			})
 

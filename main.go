@@ -47,6 +47,7 @@ func main() {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
+	go bot.ListenForWebhook(ctx)
 
 	go func(ctx context.Context, client *slack.Client, socketClient *socketmode.Client) {
 		for {

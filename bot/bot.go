@@ -3,9 +3,12 @@ package bot
 import (
 	"alfred/registry"
 	"context"
+	"encoding/json"
+	"net/http"
 	"strings"
 
 	"github.com/Strum355/log"
+	"github.com/go-chi/chi"
 	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/slackevents"
 	"github.com/slack-go/slack/socketmode"
@@ -23,6 +26,36 @@ func NewBot(client *slack.Client, socketClient *socketmode.Client, serviceReg re
 		socketClient: socketClient,
 		registry:     serviceReg,
 	}
+}
+
+type WebhookRequest struct {
+	UserID  string `json:"userid"`
+	Message string `json:"message"`
+}
+
+func (b *Bot) ListenForWebhook(ctx context.Context) {
+	r := chi.NewRouter()
+
+	r.Post("/webhook", func(w http.ResponseWriter, r *http.Request) {
+		var body WebhookRequest
+		err := json.NewDecoder(r.Body).Decode(&body)
+		if err != nil {
+			w.WriteHeader(500)
+			return
+		}
+		attachment := slack.Attachment{
+			Pretext: "Message",
+			Text:    body.Message,
+		}
+		_, _, err = b.client.PostMessage(body.UserID, slack.MsgOptionAttachments(attachment))
+		if err != nil {
+			log.WithError(err).Error("Could not post message")
+			w.WriteHeader(500)
+			return
+		}
+	})
+
+	http.ListenAndServe(":4000", r)
 }
 
 func (b *Bot) HandleEvent(ctx context.Context, event slackevents.EventsAPIEvent) error {

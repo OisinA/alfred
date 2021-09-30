@@ -147,6 +147,15 @@ func (r *Registry) interceptDeregister(message SendCommand) string {
 	return "Service deregistered."
 }
 
+func (r *Registry) interceptCommands(message SendCommand) string {
+	msg := ""
+	for _, s := range r.Services {
+		msg += s.CommandTrigger + "\n"
+	}
+
+	return msg
+}
+
 // Send the command information by the command string
 func (r *Registry) SendByCommand(command string, message SendCommand) (string, error) {
 	if command == "register" {
@@ -154,6 +163,9 @@ func (r *Registry) SendByCommand(command string, message SendCommand) (string, e
 	}
 	if command == "deregister" {
 		return r.interceptDeregister(message), nil
+	}
+	if command == "commands" {
+		return r.interceptCommands(message), nil
 	}
 	var service *Service = nil
 	for _, s := range r.Services {

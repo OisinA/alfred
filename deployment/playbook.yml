@@ -1,12 +1,12 @@
 ---
 - hosts: sites
-  remote_user: ec2-user
+  remote_user: ubuntu
   tasks:
     - name: Install python3
-      yum:
-        name: python37
+      apt:
+        name: python3
     - name: Install pip3
-      yum:
+      apt:
         name: python3-pip
     - name: Install docker python
       pip:
@@ -18,7 +18,7 @@
         force: yes
     - name: Remove old
       docker_container:
-        name: alfred
+        name: gideon
         state: absent
     - name: Create container
       docker_container:

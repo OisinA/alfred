@@ -32,7 +32,7 @@ func (s *Service) Send(sc SendCommand) (string, error) {
 	}
 
 	client := http.Client{}
-	req, err := http.NewRequest("POST", "http://"+s.URL+":"+s.Port, bytes.NewBuffer(marshal))
+	req, err := http.NewRequest("POST", "http://"+s.URL+":"+s.Port+"/"+sc.Command, bytes.NewBuffer(marshal))
 	if err != nil {
 		return "", err
 	}

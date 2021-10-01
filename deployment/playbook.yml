@@ -4,12 +4,12 @@
   tasks:
     - name: Pull image
       docker_image:
-        name: oisina/alfred:latest
+        name: oisina/alfred:main
         source: pull
         force: yes
     - name: Remove old
       docker_container:
-        name: gideon
+        name: alfred
         state: absent
     - name: Create container
       docker_container:

@@ -54,7 +54,6 @@ func (s *Service) Send(sc SendCommand) (string, error) {
 }
 
 // Registry is an in-memory storage of the registered service
-// TODO - Keep a more permanent storage
 type Registry struct {
 	Services []Service
 }

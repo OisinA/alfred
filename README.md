@@ -21,7 +21,8 @@ Commands currently usable can be access through the `commands` command.
 
 ### Current Services
 
-| Service | URL | Description |
-| Resource Service | https://github.com/JasonVanRaamsdonk/example_rest_api | A service that gives easy access to handy internal Workday resources |
-| Covid Return to Office | https://github.com/mcDevittMaya5/hackathon | A service that provides utilities for returning to the office such as temperatur checks |
-| Health Reminder Service | https://github.com/GohEeEn/health-reminder-service | A service that reminds users to practice healthy activities while working from home |
+|          Service        |                          URL                          |                                      Description                                         |
+| ----------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Resource Service        | https://github.com/JasonVanRaamsdonk/example_rest_api | A service that gives easy access to handy internal Workday resources                     |
+| Covid Return to Office  | https://github.com/mcDevittMaya5/hackathon            | A service that provides utilities for returning to the office such as temperature checks |
+| Health Reminder Service | https://github.com/GohEeEn/health-reminder-service    | A service that reminds users to practice healthy activities while working from home      |

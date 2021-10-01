@@ -171,8 +171,12 @@ func (r *Registry) SendByCommand(command string, message SendCommand) (string, e
 	for _, s := range r.Services {
 		if s.CommandTrigger == command {
 			service = &s
+			break
 		}
 	}
+
+	fmt.Println(*service)
+
 	if service == nil {
 		return "", errors.New(fmt.Sprintf("Command not found %s", command))
 	}

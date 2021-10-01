@@ -14,7 +14,7 @@
     - name: Create container
       docker_container:
         name: alfred
-        image: oisina/alfred
+        image: oisina/alfred:main
         state: started
         network_mode: host
         env:

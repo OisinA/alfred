@@ -19,7 +19,7 @@
         exposed_ports:
           - 4000:4000
         volumes:
-          - /home/ubuntu/services.json:/alfred/services.json
+          - /home/ubuntu/services.json:/alfred/services.json:rw
         env:
           ALFRED_TOKEN: "{{ alfred_token }}"
           ALFRED_APPTOKEN: "{{ alfred_apptoken }}"

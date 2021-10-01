@@ -16,7 +16,10 @@
         name: alfred
         image: oisina/alfred:main
         state: started
-        network_mode: host
+        exposed_ports:
+          - 4000:4000
+        volumes:
+          - /home/ubuntu/services.json:/alfred/services.json
         env:
           ALFRED_TOKEN: "{{ alfred_token }}"
           ALFRED_APPTOKEN: "{{ alfred_apptoken }}"

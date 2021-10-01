@@ -175,11 +175,11 @@ func (r *Registry) SendByCommand(command string, message SendCommand) (string, e
 		}
 	}
 
-	fmt.Println(*service)
-
 	if service == nil {
 		return "", errors.New(fmt.Sprintf("Command not found %s", command))
 	}
+
+	fmt.Println(*service)
 
 	resp, err := service.Send(message)
 	if err != nil {

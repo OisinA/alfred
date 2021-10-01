@@ -4,6 +4,7 @@ import (
 	"alfred/registry"
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -85,6 +86,8 @@ func (b *Bot) HandleEvent(ctx context.Context, event slackevents.EventsAPIEvent)
 				return err
 			}
 
+			fmt.Println("Username: " + user.RealName)
+
 			// Send the command to the relevant service
 			msg, err := b.registry.SendByCommand(command, registry.SendCommand{
 				Command:  command,
@@ -132,10 +135,11 @@ func (b *Bot) HandleEvent(ctx context.Context, event slackevents.EventsAPIEvent)
 				return err
 			}
 			msg, err := b.registry.SendByCommand(command, registry.SendCommand{
-				Command: command,
-				User:    user.Name,
-				UserID:  user.ID,
-				Args:    withoutCommand,
+				Command:  command,
+				User:     user.Name,
+				UserID:   user.ID,
+				Username: user.RealName,
+				Args:     withoutCommand,
 			})
 
 			if err != nil {

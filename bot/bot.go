@@ -87,10 +87,11 @@ func (b *Bot) HandleEvent(ctx context.Context, event slackevents.EventsAPIEvent)
 
 			// Send the command to the relevant service
 			msg, err := b.registry.SendByCommand(command, registry.SendCommand{
-				Command: command,
-				User:    user.Name,
-				UserID:  user.ID,
-				Args:    withoutCommand,
+				Command:  command,
+				User:     user.Name,
+				UserID:   user.ID,
+				Username: user.RealName,
+				Args:     withoutCommand,
 			})
 
 			// If there is an error, print it to the user

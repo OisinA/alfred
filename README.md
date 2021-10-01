@@ -1,6 +1,6 @@
 # Alfred
 
-General purpose modular Slack bot.
+General purpose modular Slack bot for Workday Orbit 2021 Hackathon.
 
 ## Services
 
